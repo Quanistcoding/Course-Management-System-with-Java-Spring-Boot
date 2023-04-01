@@ -7,10 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/instructors")
@@ -41,6 +38,14 @@ public class InstructorController {
             return "instructors/create";
 
         instructorRepository.save(instructor);
+
+        return "redirect:/instructors";
+    }
+
+    @GetMapping("/{instructorId}/delete")
+    public String handleDelete(@PathVariable int instructorId){
+
+        instructorRepository.deleteById(instructorId);
 
         return "redirect:/instructors";
     }
