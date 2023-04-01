@@ -3,6 +3,8 @@ package com.example.coursemanagementsystem.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.List;
+
 @Entity
 public class Instructor {
 
@@ -20,6 +22,16 @@ public class Instructor {
     @JoinColumn(name = "detail_id")
     private InstructorDetail instructorDetail;
 
+    @OneToMany(mappedBy = "instructor")
+    private List<Course> courses;
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
 
     public InstructorDetail getInstructorDetail() {
         return instructorDetail;

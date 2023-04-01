@@ -12,7 +12,8 @@
       <tr th:each="course:${courses}">
         <td th:text="${course.courseId}"/>
         <td th:text="${course.title}"/>
-        <td th:text="'Prof. '+${course.instructor.lastName}"/>
+        <td th:text="${course.instructor != null ? course.instructor.lastName : ''}"/>
+
         <td>
           <a class = "btn btn-info" th:href="@{/courses/{courseId}(courseId=${course.id})}">Detail</a>
           <a

@@ -24,9 +24,9 @@ CREATE TABLE `course` (
   `course_id` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `title` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `description` mediumtext,
-  `instructor_id` int NOT NULL,
+  `instructor_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_INSTRUCTOR_idx` (`instructor_id`),
   CONSTRAINT `FK_INSTRUCTOR` FOREIGN KEY (`instructor_id`) REFERENCES `instructor` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

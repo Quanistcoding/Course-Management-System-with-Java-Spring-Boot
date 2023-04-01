@@ -3,6 +3,7 @@ package com.example.coursemanagementsystem.controller;
 
 import com.example.coursemanagementsystem.entity.Instructor;
 import com.example.coursemanagementsystem.entity.InstructorDetail;
+import com.example.coursemanagementsystem.repository.CourseRepository;
 import com.example.coursemanagementsystem.repository.InstructorRepository;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -15,9 +16,11 @@ import org.springframework.web.bind.annotation.*;
 public class InstructorController {
 
     private InstructorRepository instructorRepository;
+    private CourseRepository courseRepository;
 
-    public InstructorController(InstructorRepository instructorRepository) {
+    public InstructorController(InstructorRepository instructorRepository,CourseRepository courseRepository) {
         this.instructorRepository = instructorRepository;
+        this.courseRepository = courseRepository;
     }
 
     @GetMapping("")
@@ -86,6 +89,15 @@ public class InstructorController {
 
         model.addAttribute("instructor",instructor);
 
+        return "redirect:/instructors/" + instructorId;
+    }
+
+    @GetMapping("{instructorId}/deselect/{courseId}")
+    public String deselectCourse(@PathVariable int instructorId, @PathVariable int courseId){
+        var course = courseRepository.getReferenceById(courseId);
+        course.setInstructor(null);
+
+        courseRepository.save(course);
         return "redirect:/instructors/" + instructorId;
     }
 }

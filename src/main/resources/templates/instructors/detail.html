@@ -11,5 +11,28 @@
       <a th:href = "@{/instructors/{instructorId}/edit(instructorId=${instructor.id})}" class = "btn btn-primary mr-2">Edit</a>
       <a href = "/instructors">Back to Instructor List</a>
     </div>
+
+    <div class="mt-3">
+      <h3>Professor <span th:text="${instructor.lastName}"/>'s Courses</h3>
+      <table class="table">
+        <tr>
+          <th>Course Id</th>
+          <th>Title</th>
+          <th></th>
+        </tr>
+        <tr th:each="course:${instructor.courses}">
+          <td th:text="${course.courseId}"/>
+          <td th:text="${course.title}"/>
+          <td>
+            <a
+                    th:onclick="@{if(!confirm('are you sure you want to deselect {title}?'))return false(title = ${course.title})}"
+                    class = "btn btn-danger" th:href="@{/instructors/{instructorId}/deselect/{courseId}(instructorId=${instructor.id},courseId=${course.id})}">
+              Deselect
+            </a>
+
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
 </html>
