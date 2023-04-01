@@ -21,12 +21,12 @@ CREATE TABLE  IF NOT EXISTS `instructor` (
 
 CREATE TABLE `course` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `last_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `first_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `student_id` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `course_id` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `title` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `description` mediumtext,
   `instructor_id` int NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_COURSE_idx` (`instructor_id`),
-  CONSTRAINT `FK_COURSE` FOREIGN KEY (`instructor_id`) REFERENCES `instructor` (`id`)
+  KEY `FK_INSTRUCTOR_idx` (`instructor_id`),
+  CONSTRAINT `FK_INSTRUCTOR` FOREIGN KEY (`instructor_id`) REFERENCES `instructor` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
