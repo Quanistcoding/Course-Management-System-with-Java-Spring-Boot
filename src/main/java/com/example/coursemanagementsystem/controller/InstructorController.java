@@ -5,7 +5,10 @@ import com.example.coursemanagementsystem.entity.Instructor;
 import com.example.coursemanagementsystem.entity.InstructorDetail;
 import com.example.coursemanagementsystem.repository.CourseRepository;
 import com.example.coursemanagementsystem.repository.InstructorRepository;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -61,6 +64,8 @@ public class InstructorController {
         if(instructor.getInstructorDetail() == null)
             instructor.setInstructorDetail(new InstructorDetail());
 
+        var courses = courseRepository.findAll();
+        model.addAttribute("courses",courses);
         model.addAttribute("instructor",instructor);
 
         return "instructors/detail";
@@ -87,6 +92,7 @@ public class InstructorController {
 
         instructorRepository.save(instructor);
 
+
         model.addAttribute("instructor",instructor);
 
         return "redirect:/instructors/" + instructorId;
@@ -97,6 +103,16 @@ public class InstructorController {
         var course = courseRepository.getReferenceById(courseId);
         course.setInstructor(null);
 
+        courseRepository.save(course);
+        return "redirect:/instructors/" + instructorId;
+    }
+
+    @PostMapping("{instructorId}/addCourse")
+    public String handleAddCourse(@PathVariable int instructorId, HttpServletRequest request){
+        var courseId = Integer.parseInt(request.getParameter("courseId"));
+        var course = courseRepository.getReferenceById(courseId);
+        var instructor = instructorRepository.getReferenceById(instructorId);
+        course.setInstructor(instructor);
         courseRepository.save(course);
         return "redirect:/instructors/" + instructorId;
     }

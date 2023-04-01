@@ -33,6 +33,18 @@
           </td>
         </tr>
       </table>
+      <h4>Add a Course</h4>
+      <form th:action ="@{/instructors/{instructorId}/addCourse(instructorId=${instructor.id})}" method="post">
+        <select class = "form-select" name = "courseId">
+          <option th:each="course:${courses}" th:value="${course.id}" th:text = "${course.instructor != null
+          ?
+          course.title + ' taught by Prof. ' + course.instructor.lastName
+          :
+          course.title
+          }"/>
+        </select>
+        <button class = "btn btn-success mt-2">Add Course</button>
+      </form>
     </div>
   </div>
 </html>
