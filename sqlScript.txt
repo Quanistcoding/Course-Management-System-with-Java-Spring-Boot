@@ -1,0 +1,20 @@
+CREATE DATABASE `development_java` ;
+
+USE  `development_java` ;
+
+CREATE TABLE  IF NOT EXISTS `instructor_detail` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(250) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `phone` varchar(250) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE  IF NOT EXISTS `instructor` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `last_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `detail_id` int,
+  PRIMARY KEY (`id`),
+  KEY `FK_INSTRUCTOR_DETAIL_idx` (`detail_id`),
+  CONSTRAINT `FK_INSTRUCTOR_DETAIL` FOREIGN KEY (`detail_id`) REFERENCES `instructor_detail` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
