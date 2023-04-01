@@ -1,0 +1,18 @@
+<html layout:decorate="layout">
+<div layout:fragment="content">
+  <h3>Add an Instructor</h3>
+  <form th:action="@{/instructors/create}" method="post" th:object = "${instructor}">
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" class="form-control" id="firstName" placeholder="First Name" th:field = "*{firstName}">
+      <div th:errors="*{firstName}">a</div>
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input type="text" class="form-control" id="lastName" placeholder="Last Name" th:field = "*{lastName}">
+      <div th:errors="*{lastName}">b</div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+</html>
