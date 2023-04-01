@@ -2,6 +2,7 @@ package com.example.coursemanagementsystem.controller;
 
 import com.example.coursemanagementsystem.entity.Course;
 import com.example.coursemanagementsystem.entity.Instructor;
+import com.example.coursemanagementsystem.entity.InstructorDetail;
 import com.example.coursemanagementsystem.repository.CourseRepository;
 import com.example.coursemanagementsystem.repository.InstructorRepository;
 import jakarta.validation.Valid;
@@ -38,7 +39,7 @@ public class CourseController {
 
     @PostMapping("/create")
     public String handleCreate(@Valid Course course, BindingResult result, Model model){
-        System.out.println(course);
+
         if(result.hasErrors()) {
             var instructors =  instructorRepository.findAll();
             model.addAttribute("instructors",instructors);
@@ -56,5 +57,48 @@ public class CourseController {
         courseRepository.deleteById(courseId);
 
         return "redirect:/courses";
+    }
+
+    @GetMapping("/{courseId}")
+    public String getDetailPage(@PathVariable int courseId, Model model){
+
+        var course = courseRepository.getReferenceById(courseId);
+
+        if(course.getInstructor() == null)
+            course.setInstructor(new Instructor());
+
+        model.addAttribute("course",course);
+
+        return "courses/detail";
+    }
+
+    @GetMapping("/{courseId}/edit")
+    public String getDetailEditPage(@PathVariable int courseId, Model model){
+
+        var course = courseRepository.getReferenceById(courseId);
+        var instructors =  instructorRepository.findAll();
+        model.addAttribute("course",course);
+        model.addAttribute("instructors",instructors);
+
+        return "courses/detailEdit";
+    }
+
+    @PostMapping("/{courseId}/edit")
+    public String HandleEditDetail(@Valid Course course,
+                                   BindingResult result,
+                                   Model model,
+                                   @PathVariable int courseId
+    ){
+        if(result.hasErrors()) {
+            var instructors =  instructorRepository.findAll();
+            model.addAttribute("instructors",instructors);
+            return "courses/detailEdit";
+        }
+
+        courseRepository.save(course);
+
+        model.addAttribute("course",course);
+
+        return "redirect:/courses/" + courseId;
     }
 }

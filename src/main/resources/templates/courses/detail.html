@@ -1,0 +1,15 @@
+<html layout:decorate="layout">
+  <div layout:fragment="content">
+    <h3>About <span th:text="${course.courseId}"/></h3>
+    <ul class="list-group mt-3">
+      <li class="list-group-item">Course Id: <span th:text="${course.courseId}"/></li>
+      <li class="list-group-item">Title: <span th:text="${course.title}"/></li>
+      <li class="list-group-item">Description: <span th:text="${course.description}"/></li>
+      <li class="list-group-item">Instructor: <span th:text="${course.instructor.firstName + ' ' + course.instructor.lastName}"/></li>
+    </ul>
+    <div class = "mt-2">
+      <a th:href = "@{/courses/{courseId}/edit(courseId=${course.id})}" class = "btn btn-primary mr-2">Edit</a>
+      <a href = "/instructors">Back to Courses List</a>
+    </div>
+  </div>
+</html>
