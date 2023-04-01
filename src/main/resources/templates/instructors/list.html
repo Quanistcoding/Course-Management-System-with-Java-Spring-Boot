@@ -4,13 +4,13 @@
 
     <table class="table">
       <tr>
-        <th>First Name</th>
         <th>Last Name</th>
+        <th>First Name</th>
         <th></th>
       </tr>
       <tr th:each="instructor:${instructors}">
-        <td th:text="${instructor.firstName}"/>
         <td th:text="${instructor.lastName}"/>
+        <td th:text="${instructor.firstName}"/>
         <td>
           <a class = "btn btn-info" th:href="@{/instructors/{instructorId}(instructorId=${instructor.id})}">Detail</a>
           <a

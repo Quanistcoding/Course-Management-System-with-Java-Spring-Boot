@@ -2,6 +2,7 @@ package com.example.coursemanagementsystem.controller;
 
 
 import com.example.coursemanagementsystem.entity.Instructor;
+import com.example.coursemanagementsystem.entity.InstructorDetail;
 import com.example.coursemanagementsystem.repository.InstructorRepository;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -41,12 +42,50 @@ public class InstructorController {
 
         return "redirect:/instructors";
     }
-
     @GetMapping("/{instructorId}/delete")
     public String handleDelete(@PathVariable int instructorId){
 
         instructorRepository.deleteById(instructorId);
 
         return "redirect:/instructors";
+    }
+
+    @GetMapping("/{instructorId}")
+    public String getDetailPage(@PathVariable int instructorId, Model model){
+
+        var instructor = instructorRepository.getReferenceById(instructorId);
+
+        if(instructor.getInstructorDetail() == null)
+            instructor.setInstructorDetail(new InstructorDetail());
+
+        model.addAttribute("instructor",instructor);
+
+        return "instructors/detail";
+    }
+
+    @GetMapping("/{instructorId}/edit")
+    public String getDetailEditPage(@PathVariable int instructorId, Model model){
+
+        var instructor = instructorRepository.getReferenceById(instructorId);
+
+        model.addAttribute("instructor",instructor);
+
+        return "instructors/detailEdit";
+    }
+
+    @PostMapping("/{instructorId}/edit")
+    public String HandleEditDetail(@Valid Instructor instructor,
+                                   BindingResult result,
+                                   Model model,
+                                   @PathVariable int instructorId
+    ){
+        if(result.hasErrors())
+            return "instructors/detailEdit";
+
+        instructorRepository.save(instructor);
+
+        model.addAttribute("instructor",instructor);
+
+        return "redirect:/instructors/" + instructorId;
     }
 }
