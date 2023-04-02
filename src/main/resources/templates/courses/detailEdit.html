@@ -25,7 +25,7 @@
         </select>
         <div th:errors="*{instructor}" class = "alert alert-danger"/>
       </div>
-      <button type="submit" class="btn btn-primary mr-2">Submit</button>
+      <button type="submit" class="btn btn-primary mr-2 mt-2">Submit</button>
       <a th:href = "@{/courses/{courseId}(courseId=${course.id})}">Back to Course Detail</a>
     </form>
   </div>

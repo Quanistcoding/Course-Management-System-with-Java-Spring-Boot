@@ -19,8 +19,8 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.authorizeHttpRequests(configurer ->
-                configurer.anyRequest().permitAll()
-                );
+                configurer.anyRequest().hasRole("bbb")
+                ).formLogin();
 
         return httpSecurity.build();
     }

@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -89,6 +90,8 @@ public class CourseController {
                                    Model model,
                                    @PathVariable int courseId
     ){
+        if(course.getInstructor() == null)
+            result.addError(new FieldError("nullInstructor","instructor","must choose an instructor."));
         if(result.hasErrors()) {
             var instructors =  instructorRepository.findAll();
             model.addAttribute("instructors",instructors);

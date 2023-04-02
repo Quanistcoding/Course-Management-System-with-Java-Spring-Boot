@@ -58,3 +58,17 @@ CREATE TABLE `review` (
   CONSTRAINT `FK_REVIEW_COURSE` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`),
   CONSTRAINT `FK_REVIEW_STUDENT` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `users` (
+  `username` varchar(250) NOT NULL,
+  `password` varchar(250) NOT NULL,
+  `enabled` tinyint NOT NULL,
+  PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `authorities` (
+  `username` varchar(250) NOT NULL,
+  `authority` varchar(250) NOT NULL,
+  PRIMARY KEY (`username`,`authority`),
+  CONSTRAINT `FK_USERNAME` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

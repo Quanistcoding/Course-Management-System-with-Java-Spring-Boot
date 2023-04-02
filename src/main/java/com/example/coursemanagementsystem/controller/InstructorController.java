@@ -118,7 +118,10 @@ public class InstructorController {
 
     @PostMapping("{instructorId}/addCourse")
     public String handleAddCourse(@PathVariable int instructorId, HttpServletRequest request){
-        var courseId = Integer.parseInt(request.getParameter("courseId"));
+        String courseIdString = request.getParameter("courseId");
+        if(courseIdString == null)
+            return "redirect:/instructors/" + instructorId;
+        int courseId = Integer.parseInt(courseIdString);
         var course = courseRepository.getReferenceById(courseId);
         var instructor = instructorRepository.getReferenceById(instructorId);
         course.setInstructor(instructor);
