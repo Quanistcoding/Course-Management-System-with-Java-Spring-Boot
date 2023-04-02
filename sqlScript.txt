@@ -46,3 +46,15 @@ CREATE TABLE `course_student` (
   CONSTRAINT `FK_COURSE` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`),
   CONSTRAINT `FK_STUDENT` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `review` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `comment` varchar(250) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `course_id` int NOT NULL,
+  `student_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_COURSE_idx` (`course_id`),
+  KEY `FK_STUDENT_idx` (`student_id`),
+  CONSTRAINT `FK_REVIEW_COURSE` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`),
+  CONSTRAINT `FK_REVIEW_STUDENT` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

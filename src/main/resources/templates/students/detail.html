@@ -1,6 +1,6 @@
 <html layout:decorate="layout">
   <div layout:fragment="content">
-    <h3>About <span th:text="${student.lastName}"/></h3>
+    <h3>About Student <span th:text="${student.lastName}"/></h3>
     <ul class="list-group mt-3">
       <li class="list-group-item">Student Id: <span th:text="${student.studentId}"/></li>
       <li class="list-group-item">Last Name: <span th:text="${student.lastName}"/></li>
@@ -34,7 +34,7 @@
         </option>
 
       </select>
-      <button class = "btn btn-success">Submit</button>
+      <button class = "btn btn-success mt-2">Submit</button>
     </form>
   </div>
 </html>
