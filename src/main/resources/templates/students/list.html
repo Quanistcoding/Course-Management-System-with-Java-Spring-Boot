@@ -14,10 +14,10 @@
         <td th:text="${student.lastName}"/>
         <td th:text="${student.firstName}"/>
         <td>
-          <a class = "btn btn-info" th:href="@{/instructors/{instructorId}(instructorId=${student.id})}">Detail</a>
+          <a class = "btn btn-info" th:href="@{/stuents/{studentId}(studentId=${student.id})}">Detail</a>
           <a
                   th:onclick="@{if(!confirm('are you sure you want to delete {lastName}?'))return false(lastName = ${student.lastName})}"
-                  class = "btn btn-danger" th:href="@{/instructors/{instructorId}/delete(instructorId=${student.id})}">
+                  class = "btn btn-danger" th:href="@{/students/{studentId}/delete(studentId=${student.id})}">
             Delete
           </a>
 
