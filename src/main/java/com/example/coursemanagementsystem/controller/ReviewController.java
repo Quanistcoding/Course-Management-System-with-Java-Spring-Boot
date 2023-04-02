@@ -9,10 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/reviews")
@@ -59,6 +56,16 @@ public class ReviewController {
             return "reviews/create";
         }
         reviewRepository.save(review);
+
+        return "redirect:/reviews";
+    }
+
+    @GetMapping("/{reviewId}/delete")
+    public String handleDelete(@PathVariable int reviewId){
+
+        var review = reviewRepository.getReferenceById(reviewId);
+
+        reviewRepository.deleteById(reviewId);
 
         return "redirect:/reviews";
     }
