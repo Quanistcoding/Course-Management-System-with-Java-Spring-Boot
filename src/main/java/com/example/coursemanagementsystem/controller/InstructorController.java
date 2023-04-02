@@ -1,6 +1,7 @@
 package com.example.coursemanagementsystem.controller;
 
 
+import com.example.coursemanagementsystem.entity.Course;
 import com.example.coursemanagementsystem.entity.Instructor;
 import com.example.coursemanagementsystem.entity.InstructorDetail;
 import com.example.coursemanagementsystem.repository.CourseRepository;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/instructors")
@@ -50,6 +53,15 @@ public class InstructorController {
     }
     @GetMapping("/{instructorId}/delete")
     public String handleDelete(@PathVariable int instructorId){
+
+        var instructor = instructorRepository.getReferenceById(instructorId);
+        var courses = instructor.getCourses();
+
+        for(var c : courses){
+            var course = courseRepository.getReferenceById(c.getId());
+            course.setInstructor(null);
+            courseRepository.save(course);
+        }
 
         instructorRepository.deleteById(instructorId);
 
