@@ -69,4 +69,32 @@ public class ReviewController {
 
         return "redirect:/reviews";
     }
+
+    @GetMapping("/{reviewId}/edit")
+    public String getDetailEditPage(@PathVariable int reviewId, Model model){
+
+        var review = reviewRepository.getReferenceById(reviewId);
+        var courses = courseRepository.findAll();
+        var students = studentRepository.findAll();
+
+        model.addAttribute("courses",courses);
+        model.addAttribute("students",students);
+        model.addAttribute("review",review);
+
+        return "reviews/detailEdit";
+    }
+
+    @PostMapping("/{reviewId}/edit")
+    public String HandleEditDetail(@Valid Review review,
+                                   BindingResult result,
+                                   Model model,
+                                   @PathVariable int reviewId
+    ){
+        if(result.hasErrors())
+            return "reviews/detailEdit";
+
+        reviewRepository.save(review);
+
+        return "redirect:/reviews";
+    }
 }
