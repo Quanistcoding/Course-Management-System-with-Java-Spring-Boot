@@ -23,7 +23,13 @@
         <td th:text="${student.studentId}"/>
         <td th:text="${student.lastName}"/>
         <td th:text="${student.firstName}"/>
-        <td><a class = "btn btn-info" th:href="@{/students/{studentId}(studentId=${student.id})}">Detail</a></td>
+        <td>
+          <a class = "btn btn-info" th:href="@{/students/{studentId}(studentId=${student.id})}">Detail</a>
+          <a class="btn btn-danger" th:href =
+                  "@{/students/{studentId}/deselect/{courseId}(studentId=${student.id},courseId=${course.id},source='course')}"
+          >Deselect</a>
+
+        </td>
       </tr>
     </table>
 

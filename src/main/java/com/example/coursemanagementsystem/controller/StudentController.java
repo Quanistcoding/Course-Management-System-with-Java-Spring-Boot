@@ -115,7 +115,7 @@ public class StudentController {
     }
 
     @GetMapping("/{studentId}/deselect/{courseId}")
-    public String handleDeselct(@PathVariable int studentId,@PathVariable int courseId){
+    public String handleDeselct(@PathVariable int studentId,@PathVariable int courseId,@RequestParam(required = false) String source){
         System.out.println(studentId);
         System.out.println(courseId);
         var student = studentRepository.getReferenceById(studentId);
@@ -124,6 +124,8 @@ public class StudentController {
         courses.remove(course);
         student.setCourses(courses);
         studentRepository.save(student);
+        if(source != null && source.equals("course"))
+            return "redirect:/courses/" + courseId;
         return "redirect:/students/" + studentId;
     }
 }
