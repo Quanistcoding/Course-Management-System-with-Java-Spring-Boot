@@ -31,6 +31,17 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<Student> students;
 
+    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
+    private List<Review> reviews;
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
     public List<Student> getStudents() {
         return students;
     }

@@ -2,6 +2,7 @@ package com.example.coursemanagementsystem.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.Cascade;
 
 @Entity
 public class Review {

@@ -31,5 +31,17 @@
         </td>
       </tr>
     </table>
+    <h4>Student Reviews</h4>
+    <table class="table">
+      <tr>
+        <th>Comment</th>
+        <th>By</th>
+        <th></th>
+      </tr>
+      <tr th:each="review:${course.reviews}">
+        <td th:text="${review.comment}"/>
+        <td th:text="${review.student.lastName}"/>
+      </tr>
+    </table>
   </div>
 </html>

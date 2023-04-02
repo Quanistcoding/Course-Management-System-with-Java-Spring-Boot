@@ -36,5 +36,18 @@
       </select>
       <button class = "btn btn-success mt-2">Submit</button>
     </form>
+
+    <h4>Student Reviews</h4>
+    <table class="table">
+      <tr>
+        <th>Comment</th>
+        <th>Course</th>
+        <th></th>
+      </tr>
+      <tr th:each="review:${student.reviews}">
+        <td th:text="${review.comment}"/>
+        <td th:text="${review.course.courseId}"/>
+      </tr>
+    </table>
   </div>
 </html>
