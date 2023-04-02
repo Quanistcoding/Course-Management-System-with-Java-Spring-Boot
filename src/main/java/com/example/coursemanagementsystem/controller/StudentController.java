@@ -1,6 +1,7 @@
 package com.example.coursemanagementsystem.controller;
 
 import com.example.coursemanagementsystem.entity.Instructor;
+import com.example.coursemanagementsystem.entity.InstructorDetail;
 import com.example.coursemanagementsystem.entity.Student;
 import com.example.coursemanagementsystem.repository.CourseRepository;
 import com.example.coursemanagementsystem.repository.InstructorRepository;
@@ -52,5 +53,15 @@ public class StudentController {
         studentRepository.deleteById(studentId);
 
         return "redirect:/students";
+    }
+
+    @GetMapping("/{studentId}")
+    public String getDetailPage(@PathVariable int studentId, Model model){
+
+        var student = studentRepository.getReferenceById(studentId);
+
+        model.addAttribute("student",student);
+
+        return "students/detail";
     }
 }
