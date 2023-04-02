@@ -64,4 +64,26 @@ public class StudentController {
 
         return "students/detail";
     }
+
+    @GetMapping("/{studentId}/edit")
+    public String getDetailEditPage(@PathVariable int studentId, Model model){
+        var student = studentRepository.getReferenceById(studentId);
+        model.addAttribute("student",student);
+
+        return "students/detailEdit";
+    }
+
+    @PostMapping("/{studentId}/edit")
+    public String HandleEditDetail(@Valid Student student,
+                                   BindingResult result,
+                                   Model model,
+                                   @PathVariable int studentId
+    ){
+        if(result.hasErrors())
+            return "students/detailEdit";
+
+        studentRepository.save(student);
+
+        return "redirect:/students/" + studentId;
+    }
 }

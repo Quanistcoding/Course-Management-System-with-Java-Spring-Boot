@@ -104,9 +104,6 @@ public class InstructorController {
 
         instructorRepository.save(instructor);
 
-
-        model.addAttribute("instructor",instructor);
-
         return "redirect:/instructors/" + instructorId;
     }
 
