@@ -1,25 +1,30 @@
 package com.example.coursemanagementsystem.controller;
 
+import com.example.coursemanagementsystem.entity.Course;
 import com.example.coursemanagementsystem.entity.Instructor;
 import com.example.coursemanagementsystem.entity.InstructorDetail;
 import com.example.coursemanagementsystem.entity.Student;
 import com.example.coursemanagementsystem.repository.CourseRepository;
 import com.example.coursemanagementsystem.repository.InstructorRepository;
 import com.example.coursemanagementsystem.repository.StudentRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @Controller
 @RequestMapping("/students")
 public class StudentController {
 
     private StudentRepository studentRepository;
-
-    public StudentController(StudentRepository studentRepository) {
+    private CourseRepository courseRepository;
+    public StudentController(StudentRepository studentRepository,CourseRepository courseRepository) {
         this.studentRepository = studentRepository;
+        this.courseRepository = courseRepository;
     }
 
     @GetMapping("")
@@ -59,8 +64,17 @@ public class StudentController {
     public String getDetailPage(@PathVariable int studentId, Model model){
 
         var student = studentRepository.getReferenceById(studentId);
+        var selectedCourses = student.getCourses();
+        var displayCourses = new ArrayList<Course>();
+        var courses = courseRepository.findAll();
+        for(var course : courses){
+            if(!selectedCourses.contains(course))
+                displayCourses.add(course);
+        }
+
 
         model.addAttribute("student",student);
+        model.addAttribute("courses",displayCourses);
 
         return "students/detail";
     }
@@ -84,6 +98,32 @@ public class StudentController {
 
         studentRepository.save(student);
 
+        return "redirect:/students/" + studentId;
+    }
+
+    @PostMapping("/{studentId}/addCourse")
+    public String handleAddCourse(@PathVariable int studentId, HttpServletRequest request){
+        var student = studentRepository.getReferenceById(studentId);
+        var courseId = Integer.parseInt(request.getParameter("courseId"));
+        var course = courseRepository.getReferenceById(courseId);
+        var courses = student.getCourses();
+        courses.add(course);
+        student.setCourses(courses);
+        studentRepository.save(student);
+
+        return "redirect:/students/" + studentId;
+    }
+
+    @GetMapping("/{studentId}/deselect/{courseId}")
+    public String handleDeselct(@PathVariable int studentId,@PathVariable int courseId){
+        System.out.println(studentId);
+        System.out.println(courseId);
+        var student = studentRepository.getReferenceById(studentId);
+        var course = courseRepository.getReferenceById(courseId);
+        var courses= student.getCourses();
+        courses.remove(course);
+        student.setCourses(courses);
+        studentRepository.save(student);
         return "redirect:/students/" + studentId;
     }
 }

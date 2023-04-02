@@ -10,6 +10,31 @@
       <a th:href = "@{/students/{studentId}/edit(studentId=${student.id})}" class = "btn btn-primary mr-2">Edit</a>
       <a href = "/students">Back to Student List</a>
     </div>
+    <h4>Selected Courses</h4>
+    <table class = "table">
+      <tr>
+        <th>Course Id</th>
+        <th>Title</th>
+        <th></th>
+      </tr>
+      <tr th:each="course:${student.courses}">
+        <td th:text="${course.courseId}"/>
+        <td th:text="${course.title}"/>
+        <td>
+          <a class="btn btn-danger" th:href = "@{/students/{studentId}/deselect/{courseId}(studentId=${student.id},courseId=${course.id})}">Deselect</a>
+        </td>
+      </tr>
+    </table>
 
+    <h4>Add a Course</h4>
+    <form th:action = "@{/students/{studentId}/addCourse(studentId=${student.id})}" method ="post">
+      <select class = "form-select" name = "courseId">
+        <option th:each="course:${courses}" th:value ="${course.id}" th:text="${course.courseId + ' ' + course.title}">
+
+        </option>
+
+      </select>
+      <button class = "btn btn-success">Submit</button>
+    </form>
   </div>
 </html>
